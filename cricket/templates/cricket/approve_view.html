@@ -1,0 +1,34 @@
+{% extends "beetle/base.html" %}
+{% block content %}
+
+
+<table border = 1>
+<tr>
+  <th>Time Stamp</th>
+  <th>Visitor Name</th>
+  <th>Mobile Number</th>
+  <th>Email Address</th>
+  <th>Refered By</th>
+  <th>Action</th>
+</tr>
+
+{% for item in vlist %}
+<tr> 
+
+  <td>{{ item.1 }}</td>
+  <td>{{ item.2 }}</td>
+  <td>{{ item.3 }}</td>
+  <td>{{ item.4 }}</td>
+  <td>{{ item.5 }}</td>
+  <td><form action="{{baseurl}}wifi/approve/{{item.0}}/" method="post"> 
+          {% csrf_token %}
+          <input type="submit" value="APPROVE">
+          </form>
+  </td>
+</tr>
+
+{% endfor %}
+</table>
+
+
+{% endblock content %}

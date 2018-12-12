@@ -1,0 +1,40 @@
+{% extends "beetle/base.html" %}
+{% block content %}
+
+<form action="" method="post"> 
+  {% csrf_token %}
+  <input type="submit" value="EXPORT">
+</form>
+
+<table border = 1>
+<tr>
+  <th>Registration\\</th>
+  <th>Program</th>
+  <th>Venture Name</th>
+  <th>Venture State</th>
+  <th>Action</th>
+</tr>
+
+{% for ven in vlist %}
+<tr> 
+  <td><a href={{baseurl}}vms/venture/{{ven.registration_number}}>{{ven.registration_number}}</a></td>
+  <td>{{ven.get_program}}</td>
+  <td>{{ven.venture_name}}</td>
+  <td>{{ven.get_venture_state}}</td>
+  <td>
+    <a href={{baseurl}}vms/venture/{{ven.registration_number}}/modify>Edit</a>
+    
+    <!--
+    <a href={{baseurl}}vms/venture/{{ven.registration_number}}/delete>Delete</a>
+    -->
+
+  </td>
+  </td>
+  </tr>
+</tr>
+
+{% endfor %}
+</table>
+
+
+{% endblock content %}

@@ -1,0 +1,34 @@
+{% extends "beetle/base.html" %}
+{% block content %}
+
+<table>
+<tr>
+  <th>User ID</th>
+  <th>Password</th>
+  <th>Validity</th>
+  <th>Created on</th>
+  <th>State</th>
+  <th>Issued on</th>
+  <th>Issued to</th>
+</tr>
+
+{% for tok in tlist %}
+<tr> 
+  <td>{{tok.userid}}</td>
+  <td>{{tok.password}}</td>
+  <td>{{tok.validity}}</td>
+  <td>{{tok.created_on}}</td>
+  <td>{{tok.get_token_state}}</td>
+  
+  {% if tok.token_state > 1 %}
+    <td>{{tok.issued_on}}</td>
+    <td><a href={{baseurl}}vms/participant/{{tok.issued_to}}>{{tok.issued_to}}</a></td>
+
+  {% endif %}
+</tr>
+
+{% endfor %}
+</table>
+
+
+{% endblock content %}

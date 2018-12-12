@@ -1,0 +1,45 @@
+{% extends "beetle/base.html" %}
+{% block content %}
+
+
+<form action="" method="post"> 
+  {% csrf_token %}
+  <ul>
+    {% for field in form %}
+      {% if field.label == 'Validity' %}
+      <li> {{ field.label }}(in days) {{ field }}</li>
+	{% else %}
+        <li> {{ field.label }} {{ field }}</li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  <input type="submit" value="SAVE">
+</form>
+
+<h3>
+  OR Upload New Tokens via CSV file
+</h3>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <p> Select User type
+    
+    <select name="token_for">
+      <option value="VISITOR">Visitor</option>
+      <option value="PARTICIPANT">Participant</option>
+    </select>
+    </p>
+    <br/>
+    <label for= "validity">Validity (in days)</label>
+    <input name="validity" type="number" min="1">
+    <br/>
+    <br/>
+    <input type="file" name="myfile">
+    <br/>
+    <button type="submit">Upload</button>
+  </form>
+  
+{% endblock %}
+
+

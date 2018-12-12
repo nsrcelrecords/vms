@@ -1,0 +1,23 @@
+{% extends "beetle/base.html" %}
+{% block content %}
+
+{% if count == 1 %}
+  <h3> Enter OTP recevied </h3>
+{% else %}
+  <h3> Invalid OTP. Re-enter again </h3>
+{% endif %}
+
+<form action="" method="post">
+  {% csrf_token %}
+    
+    <ul>
+      {% for field in form %}
+        <li> {{ field.label }} {{ field }}</li>
+      {% endfor %}
+    </ul>
+    </br></br>
+
+  <input type="submit" value="OK">
+</form>
+
+{% endblock content %}

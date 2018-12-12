@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    
+    <title>NSRCEL IMS</title>
+
+  </head>
+
+<style>
+.header img {
+  float: left;
+}
+
+.header h1 {
+  text-align: center;
+  top: 18px;
+  left: 10px;
+}
+
+/* Style the top navigation bar */
+.topnav {
+  overflow: hidden;
+  background-color: rgb(255,102,0);
+}
+
+/* Style the topnav links */
+.topnav a {
+  float: left;
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: white;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+  color: black;
+}
+  
+@media screen and (max-width: 400px) {
+  .topnav a {
+    float: none;
+    width: 100%;
+  }
+
+</style>
+  <body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      {% load static %}
+      <div class="header">
+        <img src="/static/images/logo.png" alt="logo" />
+          <h1>Venture Management System </h1>
+      </div>
+      <br/>
+
+      <hr>
+
+      {% if not remove_header %}
+      <div class="topnav">
+	<b>
+        <a href={{baseurl}}vms/ style="float:left">Home</a>
+        <a href="/logout" style="float:right">Logout</a>
+	<a href={{baseurl}}vms/change_password style="float:right">Change Password</a>
+	<a style="float:right">Welcome {{user}}</a>
+	</b>
+      </div>
+      {% endif %}
+
+   <br/>
+
+   {% block content %}{% endblock content %}
+
+   </body>
+</html>
+
+ 

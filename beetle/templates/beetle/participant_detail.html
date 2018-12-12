@@ -1,0 +1,54 @@
+{% extends "beetle/base.html" %}
+{% block content %}
+
+<table>
+  <tr>
+    <td><b> Participant name </b></td>
+    <td> {{ emp }} </td>
+  </tr>
+
+  <tr>
+    <td><b> Registration Number </b></td>
+    <td> {{ emp.registration_number }} </td>
+  </tr>
+
+  <tr>
+    <td><b> Venture Name </b></td>
+    <td> {{ emp.company }} </td>
+  </tr>
+
+  <tr>
+    <td><b> Designation </b></td>
+    <td> {{ emp.get_designation }} </td>
+  </tr>
+
+  <tr>
+    <td><b> Start date </b></td>
+    <td> {{ emp.start_date }} </td>
+  </tr>
+
+  <tr>
+    <td><b> End date </b></td>
+    <td> {{ emp.end_date }} </td>
+  </tr>
+  
+  <tr>
+    <td> <b> Mobile Number </b> </td>
+    <td> {{ emp.mobile_number }} </td>
+  </tr>
+
+  <tr>
+    <td> <b> Email address </b> </td>
+    <td> {{ emp.email_address }} </td>
+  </tr>
+  
+  <tr>
+    <td> <b> State </b> </td>
+    <td> {{ emp.get_state }} </td>
+  </tr>
+
+
+</table><br/><br/>
+
+
+{% endblock content %}

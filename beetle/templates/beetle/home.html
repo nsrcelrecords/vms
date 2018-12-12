@@ -1,0 +1,58 @@
+{% extends "beetle/base.html" %}
+{% block content %}
+
+<h3> Manage Ventures : </h3>
+
+<table>
+<tr>
+  <td>
+    <a href={{baseurl}}vms/venture/>View existing ventures</a>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <a href={{baseurl}}vms/participant/>View existing participants</a>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <a href={{baseurl}}vms/venture/form>Add new venture</a>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <a href={{baseurl}}vms/participant/form>Add new participant</a>
+  </td>
+</tr>
+</table>
+
+<h3> Manage Wi-Fi Tokens </h3>
+
+<table>
+<tr>
+  <td>
+    <a href={{baseurl}}wifi/token/form>Add new participant/visitor token</a>
+  </td>
+</tr>
+<tr>
+  <td>
+    <a href={{baseurl}}wifi/participant>View Participant Token</a>
+  </td>
+</tr>
+<tr>
+  <td>
+    <a href={{baseurl}}wifi/visitor>View Visitor Token</a>
+  </td>
+</tr>
+<tr>
+  <td>
+    <a href={{baseurl}}wifi/approve>Approve Visitor Token</a>
+  </td>
+</tr>
+</table>
+
+
+{% endblock content %}

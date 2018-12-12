@@ -1,0 +1,35 @@
+{% extends "beetle/base.html" %}
+{% block content %}
+
+
+<form action="" method="post"> 
+  {% csrf_token %}
+  <ul>
+    {% for field in form %}
+      {% if 'date' in field.label %}
+        <li> {{ field.label }} (yyyy-mm-dd) {{ field }}</li>
+        {% else %}
+          <li> {{ field.label }} {{ field }}</li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  <input type="submit" value="SAVE">
+</form>
+
+<br/>
+<br/>
+
+<h3>
+  OR Upload Participant from csv file
+</h3>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+    <button type="submit">Upload</button>
+  </form>
+  
+  
+{% endblock %}
+
+

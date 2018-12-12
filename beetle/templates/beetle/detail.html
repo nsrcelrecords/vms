@@ -1,0 +1,73 @@
+{% extends "beetle/base.html" %}
+{% block content %}
+
+<table>
+  <tr>
+    <td><b> Venture Name </b></td>
+    <td> {{ ven.venture_name }} </td>
+  </tr>
+
+  <tr>
+    <td><b> Registration Number </b></td>
+    <td> {{ ven.registration_number }} </td>
+  </tr>
+
+  <tr>
+    <td><b> Program </b></td>
+    <td> {{ ven.get_program }} </td>
+  </tr>
+
+  <tr>
+    <td><b> Start date </b></td>
+    <td> {{ ven.start_date }} </td>
+  </tr>
+
+  <tr>
+    <td><b> End date </b></td>
+    <td> {{ ven.end_date }} </td>
+  </tr>
+  
+  <tr>
+    <td> <b> Venture State </b> </td>
+    <td> {{ ven.get_venture_state }} </td>
+  </tr>
+
+  <tr>
+    <td> <b> Number of Employee </b> </td>
+    <td> {{ ven.get_number_of_employees }} </td>
+  </tr>
+
+</table><br/><br/>
+
+
+{% if elist %}
+<table>
+  <tr>
+    <th> Registration # </th>
+    <th> Name </th>
+    <th> Designation </th>
+    <th> Start date </th>
+    <th> End date </th>
+  </tr>
+
+  {% for emp in elist %}
+  <tr> 
+    <td><a href={{baseurl}}vms/participant/{{emp.registration_number}}>{{emp.registration_number}}</a></td>
+    <td>{{emp}}</td>
+    <td>{{emp.get_designation}}</td>
+    <td>{{emp.start_date}}</td>
+    <td>{{emp.end_date}}</td>
+    <td>
+      <a href={{baseurl}}vms/participant/{{emp.registration_number}}/modify>Edit</a>
+      
+      <!--
+      <a href={{baseurl}}vms/participant/{{emp.registration_number}}/delete>Delete</a>
+      -->
+    
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endif %}
+{% endblock content %}
