@@ -17,7 +17,8 @@ from ims.imslog import logger
 import cricket.sms_api as sa
 
 def get_dataset(ufile):
-    stream = ufile.read().decode('utf-8')
+    #stream = ufile.read().decode('utf-8')
+    stream = ufile.read().decode('ISO-8859-1')
     #print('stream',stream)
     lines = stream.split('\r\n')
     logger.info('%d lines found in imported file %s',
@@ -462,4 +463,5 @@ class participantTableView(baseView):
         'attachment; filename="participant.csv"'
 
     return response
+
 

@@ -140,7 +140,7 @@ class Venture(models.Model):
 class Participant(models.Model):
 
   company = models.ForeignKey(
-      Venture, on_delete=models.CASCADE, default = 0)  
+      Venture, on_delete=models.CASCADE)  
 
   registration_number = models.PositiveIntegerField(default = 0)
   first_name = models.CharField(max_length=75,default = '')

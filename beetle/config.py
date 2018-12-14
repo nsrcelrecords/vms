@@ -11,8 +11,10 @@ class  VenturePrograms(Enum):
   LAUNCHPAD = 1
   LAUNCHPAD_INCUBATES = 2
   IICDC = 3
-  SOCIAL = 4
-  WSP = 5
+  Social_MSDF = 4
+  Social_Mphasis = 5
+  Social_Ford = 6
+  WSP = 7
     
 class  ParticipantDesignation(Enum):
   UNKNOWN = 0

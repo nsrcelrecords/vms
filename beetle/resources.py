@@ -14,8 +14,8 @@ class VentureResource(resources.ModelResource):
         'id','userid','employee_id_counter')
 
     widgets = {
-        'start_date': {'format': '%m/%d/%Y'},
-        'end_date': {'format': '%m/%d/%Y'},
+        'start_date': {'format': '%Y/%m/%d'},
+        'end_date': {'format': '%Y/%m/%d'},
                 }
   userid = ''
 
@@ -43,12 +43,14 @@ class VentureResource(resources.ModelResource):
 
   def after_save_instance(self,instance,using_transactions,dry_run):
 
+    print('After Save called')
     if not dry_run:
       instance.update_registration_number()
       instance.last_modified = dt.date.today()
       instance.userid = self.userid
       instance.venture_state = bcfg.VentureState.ACTIVE.value
       instance.employee_id_counter = 0
+      print('Saving entry now',instance.registration_number)
       instance.save()
 
     super(VentureResource,self).after_save_instance(instance,
