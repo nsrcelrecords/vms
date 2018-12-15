@@ -8,7 +8,6 @@ import datetime as dt
 import ims.settings as settings 
 from .resources import *
 from tablib import Dataset
-from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render
@@ -87,6 +86,15 @@ class baseView(LoginRequiredMixin,View):
     return render(request, self.url_lookup[self.render_url],
         self.tparams)
 
+  def get_elist_strings(self,result): 
+    elist = result.row_errors()
+    ulist = []
+    for e in elist:
+      for f in e[1]:
+        #print("row %d error %s"%(e[0],f.error))
+        ulist.append('Row# %d: %s'%(e[0],f.error))
+    return ulist
+
 
 class changePasswordView(LoginRequiredMixin,View):
   def post(self,request):
@@ -97,13 +105,10 @@ class changePasswordView(LoginRequiredMixin,View):
     if form.is_valid():
       user = form.save()
       update_session_auth_hash(request, user)  # Important!
-      #messages.success(request, 
-      #      'Your password was successfully updated!')
       logger.info('%s Password change successfully',userid)
       return render(request,
         'beetle/home.html',{'baseurl': settings.SITE_URL})
     else:
-      #messages.error(request, 'Please correct the error below.')
       logger.warning('%s Invalid form submitted ',userid)
 
   def get(self,request):
@@ -137,6 +142,9 @@ class ventureEntryView(baseView):
       logger.info('%s Venture successfully created by %s',
           venture.venture_name,user)
 
+      self.render_url = 'VENTURE_VIEW'
+      self.tparams['vlist'] = Venture.objects.all()
+
     elif 'myfile' in request.FILES.keys():
 
       venture_resource = VentureResource(user)
@@ -146,22 +154,36 @@ class ventureEntryView(baseView):
       result = venture_resource.import_data(dataset, dry_run=True)  
 
       if not result.has_errors():
-        logger.info('Venture info file successfully uploaded by %s',
-        user)
+        self.render_url = 'VENTURE_VIEW'
+        self.tparams['vlist'] = Venture.objects.all()
+        logger.info(
+          'Venture info file successfully uploaded by %s',
+          user)
         venture_resource.import_data(dataset, dry_run=False)  
 
       else:
-        logger.warning('Error uploading venture import file by %s',
-          user)
+        self.render_url = 'VENTURE_ENTRY'
+        self.tparams['form'] = ventureForm()
+        self.tparams['ulist'] = self.get_elist_strings(result)
+        logger.warning(
+          'Error uploading venture import file by %s',user)
 
-    self.render_url = 'VENTURE_VIEW'
-    self.tparams['vlist'] = Venture.objects.all()
+    else:
+      self.render_url = 'VENTURE_ENTRY'
+      self.tparams['form'] = ventureForm()
+      self.tparams['mlist'] = venture_form._errors
+      #print('form errors',venture_form._errors)
+      logger.warning(
+          'Invalid form updated by %s:%s',
+         user,venture_form._errors)
+
     return super(ventureEntryView,self).post(request)
 
   
   def get(self,request):
     user = request.user.username
     form = ventureForm()
+    self.tparams = {}
 
     self.render_url = 'VENTURE_ENTRY'
     self.tparams['form'] = form
@@ -172,7 +194,7 @@ class ventureModifyView(baseView):
 
     user = request.user.username
     venture_form = ventureModifyForm(request.POST) 
-    print('venture_form',venture_form) 
+    #print('venture_form',venture_form) 
     if venture_form.is_valid(): 
       
       vlist = Venture.objects.filter(
@@ -195,13 +217,15 @@ class ventureModifyView(baseView):
       self.render_url = 'VENTURE_DETAIL'
       self.tparams['ven'] = venture
       self.tparams['elist'] = venture.participant_set.all()
+      return super(ventureModifyView,self).post(
+          request)
 
     else:
-      logger.warning('Venture modification form not valid %s',user)
-      self.render_url = 'INVALID_PARAMS'
+      logger.warning(
+          'Venture modification form not valid %s',user)
+      self.tparams['mlist'] = venture_form._errors
+      return self.get(request,registration_number)
 
-    return super(ventureModifyView,self).post(
-          request)
 
   def get(self,request,registration_number):
 
@@ -309,6 +333,8 @@ class participantEntryView(baseView):
       self.render_url = 'PART_DETAIL'
       self.tparams['emp'] = participant
       return super(participantEntryView,self).post(request)
+      self.render_url = 'PART_VIEW'
+      self.tparams['elist'] = Participant.objects.all()
     
     elif 'myfile' in request.FILES.keys():
 
@@ -320,24 +346,35 @@ class participantEntryView(baseView):
           dry_run=True)  
 
       if not result.has_errors():
-        participant_resource.import_data(dataset, dry_run=False)  
+        participant_resource.import_data(
+          dataset, dry_run=False)  
         logger.info(
-            'Participant import file uploaded succeccfully by %s',
-            user)
+         'Participant import file uploaded succeccfully by %s',
+          user)
+        self.render_url = 'PART_VIEW'
+        self.tparams['elist'] = Participant.objects.all()
 
       else:
         logger.warning('Participant import file not uploaded')
+        self.render_url = 'PART_ENTRY'
+        self.tparams['ulist'] = self.get_elist_strings(result)
+        self.tparams['form'] = participantForm()
 
     else:
-        logger.warning('invalid form submitted by %s: %s',user,participant_form._errors)    
+      logger.warning(
+          'invalid form submitted by %s: %s',
+          user,participant_form._errors)    
+      self.render_url = 'PART_ENTRY'
+      self.tparams['form'] = participantForm()
+      self.tparams['mlist'] = participant_form._errors 
 
-    self.render_url = 'PART_VIEW'
-    self.tparams['elist'] = Participant.objects.all()
     return super(participantEntryView,self).post(request)
 
   def get(self,request):
     user = request.user.username
     form = participantForm()
+    self.tparams = {}
+
 
     self.render_url = 'PART_ENTRY'
     self.tparams['form'] = form
@@ -399,13 +436,13 @@ class participantModifyView(baseView):
 
       self.render_url = 'PART_DETAIL'
       self.tparams['emp'] = participant
+      return super(participantModifyView,self).post(request)
 
     else:
       logger.warning('Invalid Form submitted by %s',user)
-      self.render_url = 'INVALID_PARAMS'
+      self.tparams['mlist'] = participant_form._errors
+      return self.get(request,registration_number)
 
-    return super(participantModifyView,self).post(request)
-      
   def get(self,request,registration_number):
 
     user = request.user.username

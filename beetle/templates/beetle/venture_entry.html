@@ -4,7 +4,8 @@
 <h3>
   Venture Information
 </h3>
-<br/>
+
+{{ mlist }}
 
 <form action="" method="post"> 
   {% csrf_token %}
@@ -26,6 +27,13 @@
 <h3>
   OR Upload Ventures from csv file
 </h3>
+
+{% if ulist %}
+  {% for e in ulist %}
+    <li> {{e}} </li>
+  {% endfor %}
+  <br/>
+{% endif %}
 
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}

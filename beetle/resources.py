@@ -45,14 +45,14 @@ class VentureResource(resources.ModelResource):
 
   def after_save_instance(self,instance,using_transactions,dry_run):
 
-    print('After Save called')
+    #print('After Save called')
     if not dry_run:
       instance.update_registration_number()
       instance.last_modified = dt.date.today()
       instance.userid = self.userid
       instance.venture_state = bcfg.VentureState.ACTIVE.value
       instance.employee_id_counter = 0
-      print('Saving entry now',instance.registration_number)
+      #print('Saving entry now',instance.registration_number)
       instance.venture_name = instance.venture_name.strip()
       instance.save()
 
