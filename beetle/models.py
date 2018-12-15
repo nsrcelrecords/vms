@@ -84,7 +84,7 @@ def get_next_venture_id(year):
 
 class Venture(models.Model): 
 
-  registration_number = models.PositiveIntegerField(default = 0, 
+  registration_number = models.BigIntegerField(default = 0, 
       unique = True)
    
   PROGRAMS = bcfg.get_enum_choice(bcfg.VenturePrograms)
@@ -121,15 +121,18 @@ class Venture(models.Model):
   
   def get_program_number(self,pgm_str):
     for e in self.PROGRAMS:
-      if pgm_str == e[1]:
+      #print('Comparing',pgm_str,e[1])
+      if pgm_str == e[1].upper():
         return e[0]
     return 0
   
   def update_registration_number(self):
 
     vid = get_next_venture_id(self.start_date.year)
-    new_registration_number = str(self.start_date.year)+str(
-        int(self.start_date.month/3)+1)+str(self.program)+"%04d"%vid
+    new_registration_number = str(self.start_date.year )+\
+            str(int(self.start_date.month/3)+1)+\
+            "%02d"%self.program+\
+            "%04d"%vid
     self.registration_number = int(new_registration_number)
     logger.info('%d regnum assign to %s',
         self.registration_number,self.venture_name)
@@ -142,10 +145,10 @@ class Participant(models.Model):
   company = models.ForeignKey(
       Venture, on_delete=models.CASCADE)  
 
-  registration_number = models.PositiveIntegerField(default = 0)
+  registration_number = models.BigIntegerField(default = 0)
   first_name = models.CharField(max_length=75,default = '')
   last_name = models.CharField(max_length=75,default = '')
-  mobile_number = models.PositiveIntegerField()
+  mobile_number = models.BigIntegerField()
   email_address = models.EmailField(max_length=200,)
   start_date = models.DateField()
   end_date = models.DateField()

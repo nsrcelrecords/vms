@@ -32,12 +32,16 @@ def get_dataset(ufile):
       else:
         val.append(lines[x].split(','))
     #print('hdr',hdr)
-    val = val[:-1]
+    #val = val[:-1]
     #print('val',val)
     
     dataset = Dataset(headers=hdr)
     for i in range(len(val)):
-      dataset.append(val[i])
+      try:
+        dataset.append(val[i])
+      except:
+        logger.warning('Ingnoring row %d due to errors',i+1)
+
     logger.debug('dataset.csv : %s',dataset.csv)
     return dataset
 
@@ -128,6 +132,7 @@ class ventureEntryView(baseView):
       venture.userid = user
       venture.last_modified = dt.datetime.now()
       venture.venture_state = bcfg.VentureState.ACTIVE.value
+      venture.venture_name = venture.venture_name.strip()
       venture.save()
       logger.info('%s Venture successfully created by %s',
           venture.venture_name,user)
@@ -324,7 +329,7 @@ class participantEntryView(baseView):
         logger.warning('Participant import file not uploaded')
 
     else:
-      logger.warning('invalid form submitted by %s',user)    
+        logger.warning('invalid form submitted by %s: %s',user,participant_form._errors)    
 
     self.render_url = 'PART_VIEW'
     self.tparams['elist'] = Participant.objects.all()

@@ -13,6 +13,7 @@
 import sys
 import os
 
+import ims.imslog
 from tornado.options import options, define, parse_command_line
 import tornado.httpserver
 import tornado.ioloop
