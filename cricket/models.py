@@ -45,7 +45,7 @@ class WifiToken(models.Model):
 
 class ParticipantToken(WifiToken): 
 
-  issued_to = models.PositiveIntegerField(default = 0)
+  issued_to = models.BigIntegerField(default = 0)
   
 
 class VisitorToken(WifiToken): 
@@ -53,7 +53,7 @@ class VisitorToken(WifiToken):
   issued_to = models.CharField(max_length = 75,default = '')
   email_address = models.EmailField(
       max_length = 75, default = 'nobody@email.com' )
-  mobile_number = models.PositiveIntegerField(default = 0)
+  mobile_number = models.BigIntegerField(default = 0)
   refered_by = models.CharField(max_length = 75,default = '')
 
 def get_next_itoken():
