@@ -163,8 +163,9 @@ class Participant(models.Model):
   participant_state = models.PositiveIntegerField(
     choices = P_STATE,default = 1,)
     
-  #userid = models.CharField(max_length = 30)
-  #last_modified = models.DateTimeField()
+  userid = models.CharField(max_length = 30,default = '')
+  last_modified = models.DateTimeField(
+    default = dt.datetime(2018,1,1))
   
   def __str__ (self):
     return self.first_name + ' ' + self.last_name

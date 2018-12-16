@@ -48,7 +48,7 @@ class VentureResource(resources.ModelResource):
     #print('After Save called')
     if not dry_run:
       instance.update_registration_number()
-      instance.last_modified = dt.date.today()
+      instance.last_modified = dt.datetime.now()
       instance.userid = self.userid
       instance.venture_state = bcfg.VentureState.ACTIVE.value
       instance.employee_id_counter = 0
@@ -86,6 +86,7 @@ class ParticipantImportResource(resources.ModelResource):
     widgets = {
         'start_date': {'format': '%d.%m.%Y'},
         'end_date': {'format': '%d.%m.%Y'},
+        'last_modified': {'format': '%d.%m.%Y'},
                 }
   userid = ''
 
@@ -118,7 +119,7 @@ class ParticipantImportResource(resources.ModelResource):
 
     if not dry_run:
       instance.update_registration_number()
-      instance.last_modified = dt.date.today()
+      instance.last_modified = dt.datetime.now()
       instance.userid = self.userid
       instance.participant_state = bcfg.ParticipantState.ACTIVE.value
       instance.save()

@@ -324,6 +324,8 @@ class participantEntryView(baseView):
       participant = participant_form.save(commit=False)
       participant.update_registration_number()
       participant.venture_state = bcfg.VentureState.ACTIVE.value
+      participant.last_modified = dt.datetime.now()
+      participant.userid = user
       participant.save()
       sa.send_registration_number(participant.mobile_number,
           participant.registration_number)
