@@ -6,6 +6,9 @@ class VentureState(Enum):
   ALUMINI = 2
   SUSPENDED = 3
   
+#New programs to be added only in the last.
+#Donot alter the order.
+#Donot remove any program even if the program is ended
 class  VenturePrograms(Enum):
   UNDEFINED = 0 
   LAUNCHPAD = 1
@@ -14,8 +17,10 @@ class  VenturePrograms(Enum):
   Social_MSDF = 4
   Social_Mphasis = 5
   Social_Ford = 6
-  WSP = 7
-    
+  WSP_1 = 7
+  WSP_2 = 8
+  WOMEN_10K = 9
+
 class  ParticipantDesignation(Enum):
   UNKNOWN = 0
   FOUNDER = 1 

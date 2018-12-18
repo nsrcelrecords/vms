@@ -6,16 +6,13 @@
   <input type="submit" value="EXPORT">
 </form>
 
-<table>
+<table border=1>
 <tr>
   <th>Registration\\</th>
   <th>Name</th>
   <th>Venture Name</th>
-  <th>Designation</th>
   <th>Start Date</th>
   <th>End Date</th>
-  <th>Mobile Number</th>
-  <th>Email Address</th>
   <th>State</th>
 </tr>
 
@@ -24,11 +21,8 @@
   <td><a href={{baseurl}}vms/participant/{{emp.registration_number}}>{{emp.registration_number}}</a></td>
   <td>{{emp}}</td>
   <td>{{emp.company.venture_name}}</td>
-  <td>{{emp.get_designation}}</td>
   <td>{{emp.start_date}}</td>
   <td>{{emp.end_date}}</td>
-  <td>{{emp.mobile_number}}</td>
-  <td>{{emp.email_address}}</td>
   <td>{{emp.get_state}}</td>
   <td>
     <a href={{baseurl}}vms/participant/{{emp.registration_number}}/modify>Edit</a>
