@@ -25,7 +25,9 @@ SECRET_KEY = '$ln1vjdim7)_$*cmhhp0c%2#5nzau^3l^_(#62jpm*#bkd9og8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.21.100.146',]
+ALLOWED_HOSTS = ['172.21.100.146',
+                 'live-nsrcel.iimb.ernet.in',
+                 ]
 
 
 # Application definition
@@ -141,7 +143,8 @@ STATIC_ROOT = '/home/nsrcel/static/'
 
 
 
-SITE_URL = 'http://172.21.100.146:8080/'
+#SITE_URL = 'http://172.21.100.146:8080/'
+SITE_URL = '/'
 
 LOGIN_REDIRECT_URL = 'index'
 

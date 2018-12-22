@@ -157,9 +157,7 @@ def get_issued_valid_token_for_visitor(mobile_number):
       else:
         entry.token_state = ccfg.TokenState.EXPIRED.value
         entry.save()
-        logger.warning('Moving visitor token %s to expired state %s',
-        vtoken.userid,vtoken.issued_to)
-
+        logger.warning('Moving visitor token %s to expired state %s',entry.userid,entry.issued_to)
 
   return None
 

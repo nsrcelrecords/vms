@@ -483,9 +483,9 @@ class getTokenBaseView(View):
   def get(self,request,otp_dict,form,u_url):
 
     if not request.session.session_key:
+      request.session.save()
       logger.info('storing session key %s',
           request.session.session_key)
-      request.session.save()
 
     logger.info('get token page %s accessed session id %s',
         u_url, request.session.session_key)
