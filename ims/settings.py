@@ -23,11 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '$ln1vjdim7)_$*cmhhp0c%2#5nzau^3l^_(#62jpm*#bkd9og8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['172.21.100.146',
                  'live-nsrcel.iimb.ernet.in',
-                 ]
+          ]
+
 
 
 # Application definition
@@ -89,7 +90,7 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'vmsdb2',
+        'NAME': 'vms_production',
         'USER': 'root',
         'PASSWORD': '',
     }
@@ -139,11 +140,11 @@ STATICFILES_FINDERS = (
 )
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/nsrcel/static/'
+STATIC_ROOT = 'ims/static/'
 
 
 
-#SITE_URL = 'http://172.21.100.146:8080/'
+#SITE_URL = 'http://172.21.100.146/'
 SITE_URL = '/'
 
 LOGIN_REDIRECT_URL = 'index'

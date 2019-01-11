@@ -222,7 +222,7 @@ class OtpHandler(View):
   def get_otp(self,otp_dict,request):
 
     if self.ss_key in otp_dict.keys():
-      logger.info('Session id %d count %d utype %s',self.ss_key,
+      logger.info('Session id %s count %d utype %s',self.ss_key,
           otp_dict[self.ss_key]['count'],self.utype.name)
       if otp_dict[self.ss_key]['count'] >= bmodel.otp_max_retries():
         return False

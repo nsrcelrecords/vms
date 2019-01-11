@@ -19,7 +19,8 @@ def sendSMS(numbers, message, apikey=API_KEY,
     request = urllib.request.Request("https://api.textlocal.in/send/?")
     f = urllib.request.urlopen(request, data)
     fr = f.read()
-    logger.debug('Output of send SMS %s for mobile_number %d message %s',fr,numbers[0],message)
+    logger.info('Output of send SMS %s for mobile_number %d message %s',fr,numbers[0],message)
+    print(fr,message)
     return(fr)
 
 def send_registration_number(mobile_number,registration_number):
