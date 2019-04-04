@@ -88,7 +88,7 @@ def get_issued_valid_token_for_participant(registration_number):
         entry.save()
         logger.warning(
             'Moving participant token %s to expired state %d',
-            entry.userid,entry.registration_number)
+            entry.userid,registration_number)
 
   return None
 
